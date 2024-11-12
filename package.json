@@ -1,6 +1,6 @@
 {
   "name": "create-react-app-covy",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "Create custom react app",
   "bin": {
     "create-react-app-covy": "bin/create-react-app-covy.js"

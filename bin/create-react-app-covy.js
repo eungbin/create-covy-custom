@@ -97,7 +97,7 @@ program
           fs.writeFileSync("tsconfig.json", JSON.stringify(tsconfig, null, 2));
         }
 
-        const webpackConfig =
+        const webpackConfig = reactEnvironment === 'React + Typescript' ?
           `
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -166,7 +166,62 @@ module.exports = {
     new ForkTsCheckerWebpackPlugin(),
   ],
 };
-        `;
+        ` : `
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+module.exports = {
+  mode: 'development',
+  entry: './src/index.jsx',
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
+  devtool: 'eval-cheap-source-map',
+  devServer: {
+    hot: true,
+    devMiddleware: {
+      writeToDisk: true,
+    },
+    client: {
+      overlay: true,
+    },
+    port: 5500,
+    host: "localhost",
+    historyApiFallback: true
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: '/node_modules/',
+        loader: 'babel-loader',
+      },
+      {
+        test: /\.css$/,
+        // use: ['style-loader', 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+      },
+      {
+        test: /\.(jpeg|jpg)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+        },
+      },
+    ],
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+    }),
+    new MiniCssExtractPlugin({ filename: 'app.css' }),
+  ],
+};
+`
+;
 
         const babelConfig = reactEnvironment === 'React + Typescript' ? `
 module.exports = {
@@ -256,6 +311,22 @@ ReactDOM.createRoot(rootNode).render(
         }
 
         fs.writeFileSync("src/App.css", appCssContent);
+
+        const indexHtmlContent = `
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>custom cra</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+        `;
+
+        fs.writeFileSync("public/index.html", indexHtmlContent);
 
         console.log(chalk.green("Your App is ready!"));
       });
