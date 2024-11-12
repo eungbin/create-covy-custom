@@ -1,0 +1,42 @@
+{
+  "name": "create-react-app-covy",
+  "version": "1.0.0",
+  "description": "Create custom react app",
+  "bin": {
+    "create-react-app-covy": "bin/create-react-app-covy.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "command",
+    "line",
+    "tool",
+    "cra",
+    "create",
+    "react",
+    "app",
+    "custom",
+    "custom-app"
+  ],
+  "homepage": "https://github.com/eungbin/create-covy-custom",
+  "bugs": {
+    "url": "https://github.com/eungbin/create-covy-custom",
+    "email": "programmer97@naver.com.com"
+  },
+  "author": "Covy Kim <programmer97@naver.com> (https://github.com/eungbin)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eungbin/create-covy-custom.git"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^4.1.1",
+    "commander": "^12.1.0",
+    "inquirer": "^8.2.4",
+    "shelljs": "^0.8.5"
+  },
+  "main": "index.js",
+  "devDependencies": {}
+}
