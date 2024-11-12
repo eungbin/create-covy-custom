@@ -168,10 +168,14 @@ module.exports = {
 };
         `;
 
-        const babelConfig = `
+        const babelConfig = reactEnvironment === 'React + Typescript' ? `
 module.exports = {
 presets: ['@babel/preset-react', '@babel/preset-env', '@babel/typescript'],
-};
+};` : 
+`
+module.exports = {
+presets: ['@babel/preset-react', '@babel/preset-env'],
+}; 
 `;
 
         const gitIgnore = `
@@ -210,8 +214,6 @@ src/data/
         const appContent = `
 import React from 'react';
 import './App.css';
-
-interface Props {}
 
 const App = () => {
   return (
